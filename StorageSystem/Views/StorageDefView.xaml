@@ -1,0 +1,48 @@
+﻿<UserControl
+    x:Class="StorageSystem.Views.StorageDefView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:StorageSystem.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:StorageSystem.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <cv:BoolToBrushConverter x:Key="BoolToBrush" />
+    </UserControl.Resources>
+    <Grid>
+        <md:TransitioningContent OpeningEffect="{md:TransitionEffect Kind=SlideInFromTop}">
+            <ListView ItemsSource="{Binding StorageDetails}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding InstorageDate}" Header="导入日期" />
+                        <GridViewColumn DisplayMemberBinding="{Binding StorageName}" Header="仓位编号" />
+                        <GridViewColumn DisplayMemberBinding="{Binding WbsNo}" Header="WBS号" />
+                        <GridViewColumn DisplayMemberBinding="{Binding MaterielSN}" Header="物料编号" />
+                        <GridViewColumn DisplayMemberBinding="{Binding MaterielDetail}" Header="物料描述" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </md:TransitioningContent>
+        <DockPanel LastChildFill="False">
+            <Button
+                Margin="20,5"
+                VerticalAlignment="Top"
+                Panel.ZIndex="0"
+                Command="{Binding ExecuteCommand}"
+                CommandParameter="导入数据"
+                Content="导入数据"
+                DockPanel.Dock="Right" />
+            <TextBlock
+                Margin="5"
+                VerticalAlignment="Top"
+                DockPanel.Dock="Right"
+                FontSize="20"
+                Foreground="Red"
+                Text="{Binding ErrorMessage}" />
+        </DockPanel>
+    </Grid>
+</UserControl>
