@@ -26,7 +26,7 @@ namespace StorageSystem.Service
         {
             BaseRequest request = new BaseRequest();
             request.Method = RestSharp.Method.Post;
-            request.Route = $"api/{serviceName}/Resgiter";
+            request.Route = $"api/{serviceName}/Register";
             request.Parameter = user;
             return await client.ExecuteAsync(request);
         }

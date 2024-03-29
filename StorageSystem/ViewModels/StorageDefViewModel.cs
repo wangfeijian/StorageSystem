@@ -52,7 +52,11 @@ namespace StorageSystem.ViewModels
                         });
                         if (response.Status)
                         {
-                            StorageDetails.Add(item);
+                            var detailResult = await service.AddAsync(item);
+                            if (detailResult.Status)
+                            {
+                                StorageDetails.Add(item);
+                            }
                         }
                     }
                 }

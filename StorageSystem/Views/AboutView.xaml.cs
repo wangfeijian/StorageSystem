@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace StorageSystem.Views
 {
     /// <summary>
-    /// Interaction logic for StorageOutView.xaml
+    /// Interaction logic for AboutView.xaml
     /// </summary>
-    public partial class StorageOutView : UserControl
+    public partial class AboutView : UserControl
     {
-        public StorageOutView()
+        public AboutView()
         {
             InitializeComponent();
         }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StorageSystem.API.Migrations
 {
     /// <inheritdoc />
-    public partial class MyStorage : Migration
+    public partial class StorageDbdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,13 +22,31 @@ namespace StorageSystem.API.Migrations
                     MaterielDetail = table.Column<string>(type: "TEXT", nullable: false),
                     MaterielSN = table.Column<string>(type: "TEXT", nullable: false),
                     InStorageDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    OutStorageDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    InFinish = table.Column<bool>(type: "INTEGER", nullable: false),
-                    OutFinish = table.Column<bool>(type: "INTEGER", nullable: false)
+                    InFinish = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StorageDetails", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StorageOutDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    WbsNo = table.Column<string>(type: "TEXT", nullable: false),
+                    StorageName = table.Column<string>(type: "TEXT", nullable: false),
+                    MaterielDetail = table.Column<string>(type: "TEXT", nullable: false),
+                    MaterielSN = table.Column<string>(type: "TEXT", nullable: false),
+                    InStorageDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    InFinish = table.Column<bool>(type: "INTEGER", nullable: false),
+                    OutStorageDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    OutFinish = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StorageOutDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,6 +84,9 @@ namespace StorageSystem.API.Migrations
         {
             migrationBuilder.DropTable(
                 name: "StorageDetails");
+
+            migrationBuilder.DropTable(
+                name: "StorageOutDetails");
 
             migrationBuilder.DropTable(
                 name: "StorageStatuses");

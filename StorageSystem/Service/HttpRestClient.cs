@@ -61,7 +61,7 @@ namespace StorageSystem.Service
                 var result = JsonConvert.DeserializeObject<ApiResponse>(response.Content);
                 return new ApiResponse<T>()
                 {
-                    Status = result.Status,
+                    Status = false,
                     Message = result.Result.ToString()
                 };
 

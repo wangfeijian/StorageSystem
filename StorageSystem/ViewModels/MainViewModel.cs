@@ -78,9 +78,8 @@ namespace StorageSystem.ViewModels
             MenuBars.Add(new MenuBar() { Icon = "Home", Title = "首页", NameSpace = "IndexView" });
             MenuBars.Add(new MenuBar() { Icon = "StoreOutline", Title = "仓位浏览", NameSpace = "StorageBrowseView" });
             MenuBars.Add(new MenuBar() { Icon = "StoreEdit", Title = "仓位定义", NameSpace = "StorageDefView" });
-            MenuBars.Add(new MenuBar() { Icon = "BasketFill", Title = "物料入仓", NameSpace = "StorageInView" });
-            MenuBars.Add(new MenuBar() { Icon = "BasketUnfill", Title = "物料出仓", NameSpace = "StorageOutView" });
-            MenuBars.Add(new MenuBar() { Icon = "StoreSearch", Title = "仓位查询", NameSpace = "StorageSearchView" });
+            MenuBars.Add(new MenuBar() { Icon = "Basket", Title = "物料出入仓", NameSpace = "StorageInView" });
+            MenuBars.Add(new MenuBar() { Icon = "StoreSearch", Title = "历史查询", NameSpace = "StorageSearchView" });
             MenuBars.Add(new MenuBar() { Icon = "Cog", Title = "设置", NameSpace = "SettingsView" });
         }
 

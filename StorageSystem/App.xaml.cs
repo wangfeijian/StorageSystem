@@ -40,21 +40,24 @@ namespace StorageSystem
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            var config = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText("appsettings.json"));
             containerRegistry.GetContainer().Register<HttpRestClient>(made: Parameters.Of.Type<string>(serviceKey: "webUrl"));
-            containerRegistry.GetContainer().RegisterInstance(@"http://localhost:29032/", serviceKey: "webUrl");
+            containerRegistry.GetContainer().RegisterInstance(config["WebUrl"].ToString(), serviceKey: "webUrl");
 
             containerRegistry.Register<ILoginService, LoginService>();
             containerRegistry.Register<IStorageStatusService, StorageStatusService>();
             containerRegistry.Register<IStorageDetailService, StorageDetailService>();
+            containerRegistry.Register<IStorageOutDetailService, StorageOutDetailService>();
             containerRegistry.Register<IDialogHostService, DialogHostService>();
 
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
+            containerRegistry.RegisterForNavigation<SkinView, SkinViewModel>();
+            containerRegistry.RegisterForNavigation<AboutView>();
             containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
             containerRegistry.RegisterForNavigation<StorageBrowseView, StorageBrowseViewModel>();
             containerRegistry.RegisterForNavigation<StorageDefView, StorageDefViewModel>();
             containerRegistry.RegisterForNavigation<StorageInView, StorageInViewModel>();
-            containerRegistry.RegisterForNavigation<StorageOutView, StorageOutViewModel>();
-            containerRegistry.RegisterForNavigation<StorageSearchView, StorageOutViewModel>();
+            containerRegistry.RegisterForNavigation<StorageSearchView, StorageSearchViewModel>();
             containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>();
             containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
 
@@ -90,55 +93,48 @@ namespace StorageSystem
 
             try
             {
-                var config = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText("appsettings.json"));
-                if (config != null)
+                if (AppSettingsManager.InitEnable)
                 {
-                    bool initEnable = bool.Parse(config["InitStorage"].ToString());
-                    if (initEnable)
+                    while (true)
                     {
-                        while (true)
+                        var result = await service.GetAllAsync(new Shared.Parameters.QueryParameter() { PageIndex = 0, PageSize = 100, Search = string.Empty });
+                        if (result.Status)
                         {
-                            var result = await service.GetAllAsync(new Shared.Parameters.QueryParameter() { PageIndex = 0, PageSize = 100, Search = string.Empty });
-                            if (result.Status)
-                            {
-                                if (result.Result.Items.Count <= 0)
-                                {
-                                    break;
-                                }
-                                foreach (var item in result.Result.Items)
-                                {
-                                    var deleteResult = await service.DeleteAsync(item.Id);
-                                }
-                            }
-                            else
+                            if (result.Result.Items.Count <= 0)
                             {
                                 break;
                             }
-
-                        }
-                        var storageInfo = config["StorageInfo"];
-                        var storages = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(storageInfo.ToString());
-
-                        foreach (var item in storages)
-                        {
-                            string areaName = item["AreaName"];
-                            int shelfNum, layerNum, countsOfLayer;
-                            int.TryParse(item["ShelfNum"], out shelfNum);
-                            int.TryParse(item["LayerNum"], out layerNum);
-                            int.TryParse(item["CountsOfLayer"], out countsOfLayer);
-
-                            for (int i = 1; i <= shelfNum; i++)
+                            foreach (var item in result.Result.Items)
                             {
-                                for (int j = 1; j <= layerNum; j++)
+                                var deleteResult = await service.DeleteAsync(item.Id);
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+
+                    foreach (var item in AppSettingsManager.StorageDic)
+                    {
+                        string areaName = item["AreaName"];
+                        int shelfNum, layerNum, countsOfLayer;
+                        int.TryParse(item["ShelfNum"], out shelfNum);
+                        int.TryParse(item["LayerNum"], out layerNum);
+                        int.TryParse(item["CountsOfLayer"], out countsOfLayer);
+
+                        for (int i = 1; i <= shelfNum; i++)
+                        {
+                            for (int j = 1; j <= layerNum; j++)
+                            {
+                                for (int k = 1; k <= countsOfLayer; k++)
                                 {
-                                    for (int k = 1; k <= countsOfLayer; k++)
+                                    string str = string.Format("{0}{1:00}{2:00}{3:00}", areaName, i, j, k);
+                                    var result = await service.AddAsync(new Shared.Dtos.StorageStatusDto() { StorageName = str });
+                                    if (!result.Status)
                                     {
-                                        string str = string.Format("{0}{1:00}{2:00}{3:00}", areaName, i, j, k);
-                                        var result = await service.AddAsync(new Shared.Dtos.StorageStatusDto() { StorageName = str });
-                                        if (!result.Status)
-                                        {
-                                            return;
-                                        }
+                                        return;
                                     }
                                 }
                             }
@@ -146,14 +142,11 @@ namespace StorageSystem
                     }
                 }
 
-                config["InitStorage"] = "false";
-                File.WriteAllText("appsettings.json", JsonConvert.SerializeObject(config, Formatting.Indented));
-                return;
+                AppSettingsManager.SaveInitEnable(false);
             }
             catch (Exception)
             {
             }
         }
     }
-
 }

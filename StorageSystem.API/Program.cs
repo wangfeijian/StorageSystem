@@ -18,6 +18,7 @@ builder.Services.AddDbContext<StorageDbContext>(option =>
 }).AddUnitOfWork<StorageDbContext>()
 .AddCustomRepository<User, UserRepository>()
 .AddCustomRepository<StorageDetail, StorageDetailRepository>()
+.AddCustomRepository<StorageOutDetail, StorageOutDetailRepository>()
 .AddCustomRepository<StorageStatus, StorageStatusRepository>();
 
 builder.Services.AddTransient<IUserService, UserService>();

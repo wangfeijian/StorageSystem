@@ -14,11 +14,11 @@
     Height="768"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
-    Background="{DynamicResource MaterialDesignShadowBrush}"
+    Background="{DynamicResource MaterialDesign.Brush.Background}"
     FontFamily="微软雅黑"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
-    TextElement.Foreground="{DynamicResource MaterialDesignLightSeparatorBackground}"
+    TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     WindowStartupLocation="CenterScreen"
@@ -31,7 +31,10 @@
         <materialDesign:DrawerHost x:Name="drawerHost" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="220">
-                    <StackPanel Margin="0,20" DockPanel.Dock="Top">
+                    <StackPanel
+                        Margin="0,20"
+                        Background="Transparent"
+                        DockPanel.Dock="Top">
                         <Image
                             Width="50"
                             Height="50"
@@ -60,7 +63,7 @@
                         </i:Interaction.Triggers>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Background="Transparent" Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Margin="15,0" Kind="{Binding Icon}" />
                                     <TextBlock Margin="10,0" Text="{Binding Title}" />
                                 </StackPanel>
@@ -69,7 +72,7 @@
                     </ListBox>
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
-            <Grid>
+            <Grid Background="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition />

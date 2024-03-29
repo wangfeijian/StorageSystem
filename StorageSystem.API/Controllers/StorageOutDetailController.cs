@@ -27,7 +27,10 @@ namespace StorageSystem.API.Controllers
         public async Task<ApiResponse> GetAll([FromQuery] QueryParameter parameter) => await service.GetAllAsync(parameter);
 
         [HttpGet]
-        public async Task<ApiResponse> Get(string sn) => await service.GetAsync(sn);
+        public async Task<ApiResponse> Get(int sn) => await service.GetAsync(sn);
+
+        [HttpGet]
+        public async Task<ApiResponse> GetFromSn(string sn) => await service.GetAsync(sn);
 
         [HttpPost]
         public async Task<ApiResponse> Update([FromBody] StorageOutDetailDto model) => await service.UpdateAsync(model);

@@ -11,8 +11,8 @@ using StorageSystem.API.Context;
 namespace StorageSystem.API.Migrations
 {
     [DbContext(typeof(StorageDbContext))]
-    [Migration("20240322062058_MyStorage")]
-    partial class MyStorage
+    [Migration("20240328063316_StorageDb.db")]
+    partial class StorageDbdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,39 @@ namespace StorageSystem.API.Migrations
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0-preview.2.24128.4");
 
             modelBuilder.Entity("StorageSystem.Shared.Context.StorageDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("InFinish")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("InStorageDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MaterielDetail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MaterielSN")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StorageName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WbsNo")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StorageDetails");
+                });
+
+            modelBuilder.Entity("StorageSystem.Shared.Context.StorageOutDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +89,7 @@ namespace StorageSystem.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StorageDetails");
+                    b.ToTable("StorageOutDetails");
                 });
 
             modelBuilder.Entity("StorageSystem.Shared.Context.StorageStatus", b =>

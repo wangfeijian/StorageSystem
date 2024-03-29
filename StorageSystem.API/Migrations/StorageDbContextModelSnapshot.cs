@@ -23,11 +23,6 @@ namespace StorageSystem.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("InFinish")
                         .HasColumnType("INTEGER");
 
@@ -53,10 +48,45 @@ namespace StorageSystem.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StorageDetails");
+                });
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("StorageDetail");
+            modelBuilder.Entity("StorageSystem.Shared.Context.StorageOutDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.UseTphMappingStrategy();
+                    b.Property<bool>("InFinish")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("InStorageDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MaterielDetail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MaterielSN")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("OutFinish")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("OutStorageDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StorageName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WbsNo")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StorageOutDetails");
                 });
 
             modelBuilder.Entity("StorageSystem.Shared.Context.StorageStatus", b =>
@@ -98,19 +128,6 @@ namespace StorageSystem.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("StorageSystem.Shared.Context.StorageOutDetail", b =>
-                {
-                    b.HasBaseType("StorageSystem.Shared.Context.StorageDetail");
-
-                    b.Property<bool>("OutFinish")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("OutStorageDate")
-                        .HasColumnType("TEXT");
-
-                    b.HasDiscriminator().HasValue("StorageOutDetail");
                 });
 #pragma warning restore 612, 618
         }

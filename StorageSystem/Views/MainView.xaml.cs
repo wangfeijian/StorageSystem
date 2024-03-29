@@ -1,5 +1,7 @@
-﻿using StorageSystem.Common;
+﻿using MaterialDesignThemes.Wpf;
+using StorageSystem.Common;
 using StorageSystem.Extensions;
+using StorageSystem.ViewModels;
 using System.Windows;
 using System.Windows.Input;
 
@@ -14,7 +16,8 @@ namespace StorageSystem.Views
         public MainView(IEventAggregator aggregator, IDialogHostService dialogHostService)
         {
             InitializeComponent();
-
+            SkinViewModel.ModifyTheme(theme => theme.SetBaseTheme(AppSettingsManager.IsDarkMode ? BaseTheme.Dark : BaseTheme.Light));
+            SkinViewModel.ChangeHue(AppSettingsManager.Color);
             //注册提示消息
             aggregator.ResgiterMessage(Snackbar.MessageQueue.Enqueue);
 

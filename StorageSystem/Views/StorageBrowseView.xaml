@@ -24,28 +24,19 @@
                 Height="20"
                 Margin="5"
                 Background="#C0C0C0" />
-            <TextBlock
-                VerticalAlignment="Center"
-                Foreground="White"
-                Text="未定义" />
+            <TextBlock VerticalAlignment="Center" Text="未定义" />
             <Border
                 Width="20"
                 Height="20"
                 Margin="5"
                 Background="#00FF00" />
-            <TextBlock
-                VerticalAlignment="Center"
-                Foreground="White"
-                Text="已定义" />
+            <TextBlock VerticalAlignment="Center" Text="已定义" />
             <Border
                 Width="20"
                 Height="20"
                 Margin="5"
                 Background="#FF0000" />
-            <TextBlock
-                VerticalAlignment="Center"
-                Foreground="White"
-                Text="已入库" />
+            <TextBlock VerticalAlignment="Center" Text="已入库" />
             <Button
                 Margin="5"
                 Command="{Binding ExecuteCommand}"
@@ -62,7 +53,6 @@
                 Width="20"
                 Margin="5"
                 DockPanel.Dock="Right"
-                Foreground="White"
                 Text="{Binding Index}" />
             <Button
                 Margin="5"
@@ -81,7 +71,6 @@
                 Margin="5"
                 md:HintAssist.Hint="根据仓位号查询..."
                 DockPanel.Dock="Right"
-                Foreground="White"
                 Text="{Binding Query}" />
         </DockPanel>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
